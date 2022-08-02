@@ -8,7 +8,8 @@
     </div>
 
     <div v-if="users.length" class="my-3">
-      Data in this table will auto-update as you make changes. (Check the console)  See <span class="kbd">UserRow.vue</span> for implementation details.
+      Data in this table will auto-update as you make changes. (Check the console) See <span class="kbd">UserRow.vue</span> for implementation
+      details.
       <table class="table w-full table-zebra">
         <thead>
           <tr>
@@ -27,9 +28,7 @@
 
     <div v-else class="card bg-base-300">
       <div class="card-body">
-        <div class="card-title">
-          No Users
-        </div>
+        <div class="card-title">No Users</div>
 
         <router-link to="/users/new" class="btn w-48 m-auto">
           <feather-plus class="mr-1" />
@@ -41,8 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { models, useFind } from 'feathers-pinia'
-import { useRouter } from 'vue-router'
+import { useFind } from 'feathers-pinia'
 import { useUserStore } from '~/stores/user'
 
 const userStore = useUserStore()
@@ -57,5 +55,4 @@ const params = computed(() => {
   return { query: {} }
 })
 const { items: users } = useFind({ model: User, params })
-
 </script>
