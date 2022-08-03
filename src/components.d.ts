@@ -23,6 +23,7 @@ declare module 'vue' {
     UserQuickCreate: typeof import('./components/UserQuickCreate.vue')['default']
     UserRow: typeof import('./components/UserRow.vue')['default']
     UserRowById: typeof import('./components/UserRowById.vue')['default']
+    UserRowByIdAndReactive: typeof import('./components/UserRowByIdAndReactive.vue')['default']
     UserRowCloneAtSave: typeof import('./components/UserRowCloneAtSave.vue')['default']
     UserRowCloneAtSaveWithoutFix: typeof import('./components/UserRowCloneAtSaveWithoutFix.vue')['default']
     UserRowCloneWithoutFix: typeof import('./components/UserRowCloneWithoutFix.vue')['default']

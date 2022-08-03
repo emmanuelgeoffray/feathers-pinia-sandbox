@@ -81,7 +81,7 @@
       <a class="link" href="https://github.com/marshallswain/feathers-pinia/issues/52"> issue </a>
       with clones currently with feathers-pinia. A quick fix is to clear existing clone.
       <br />
-      Pros: Respects the two Vue rules on
+      Pros: Reactivity works and this pattern respects the two Vue rules on
       <a class="link" href="https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication"
         >implicit-parent-child-communication</a
       >
@@ -108,10 +108,59 @@
       </table>
     </div>
     <div v-if="users.length" class="my-3">
-      <u>Recommended :</u>
       [UserRowById.vue] This components receives the userId as a prop and fetches the user from store with
       <a class="link" href="https://feathers-pinia.pages.dev/guide/use-get.html">useGet</a>
-      <button type="button" class="btn mt-4 mb-2" @click="addUser">Add user</button>
+      <div>
+        Pros: Reactivity works and this pattern respects the two Vue rules on
+        <a class="link" href="https://vuejs.org/style-guide/rules-use-with-caution.html#implicit-parent-child-communication"
+          >implicit-parent-child-communication</a
+        >
+        and
+        <a class="link" href="https://vuex.vuejs.org/guide/strict.html">Strict mode (do not mutate state outside of mutation handlers)</a>
+      </div>
+      <div>
+        Cons: If the userId prop is changed, component is not refreshed with content from new user. Hit button below to add a user and notice how the
+        input does not change.
+      </div>
+
+      <div>
+        <button type="button" class="btn mt-4 mb-2" @click="addUser">Add user</button>
+      </div>
+
+      <table class="table w-full table-zebra">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <UserRowById :userId="lastUser.id" />
+        </tbody>
+      </table>
+    </div>
+
+    <div v-if="users.length" class="my-3">
+      <u>Recommended :</u>
+      [UserRowById.vue] with a
+      <a class="link" href="" target="_blank">`key` special attribute</a>.
+      <div>
+        This components receives the userId as a prop and fetches the user from store with
+        <a class="link" href="https://feathers-pinia.pages.dev/guide/use-get.html">useGet</a>
+      </div>
+      <div>
+        Pros: Reactivity works and a change in userId changes the input. The `key` special attributes forces replacement of the component instead of
+        reusing it.
+      </div>
+      <div>
+        Cons: The component is replaced instead of patched, this can have a CPU cost depending on the complexity of the component, and triggers
+        transition animations.
+      </div>
+      <div>
+        Use case: A quick edit component docked on a page that is reused to edit different items. The component is reactive with data changed in other
+        component or server update.
+      </div>
 
       <table class="table w-full table-zebra">
         <thead>
@@ -123,6 +172,37 @@
         </thead>
         <tbody>
           <UserRowById :key="lastUser.id" :userId="lastUser.id" />
+        </tbody>
+      </table>
+    </div>
+    <div v-if="users.length" class="my-3">
+      [UserRowByIdAndReactive.vue]
+      <div>
+        This components receives the userId as a prop. It uses `watch` to track changes on userId and triggers an action to fetch user from store. The
+        `user` object is a `computed` to reflect changes of userId. It may look counter-intuitive to make changes to `user.name` in the template as
+        user is a computed. This works because user is an object.
+      </div>
+      <div>Pros: Reactivity works and a change in userId changes the input. The component is not replaced, it's patched with new values.</div>
+      <div>
+        Cons: This breaks Vue's rule named
+        <a class="link" href="https://vuejs.org/guide/essentials/computed.html#writable-computed"> Avoid mutating computed value </a>
+        and mutating a computed that has no setter makes your code hard to understand.
+      </div>
+      <div>
+        Use case: A quick edit component docked on a page that is reused to edit different items. The component is reactive with data changed in other
+        component or server update. You prefer to patch the component rather than replacing it.
+      </div>
+
+      <table class="table w-full table-zebra">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <UserRowByIdAndReactive :userId="lastUser.id" />
         </tbody>
       </table>
     </div>
@@ -165,9 +245,11 @@ const params = computed(() => {
 const { items: users } = useFind({ model: User, params })
 
 const lastUser = computed(() => users.value[users.value.length - 1])
+
 function patchFirstUser() {
   api.service('users').patch('0', { name: 'Emmanuel' })
 }
+
 function addUser() {
   api.service('users').create({ id: 1, name: 'Martin' })
 }

@@ -28,11 +28,32 @@ const props = defineProps({
 
 const userStore = useUserStore()
 
-const { item: user } = useGet({ model: userStore.Model, id: props.userId })
+// fetch item on userId change
+watch(
+  // the source we are watching
+  () => props.userId,
+  // the action when triggered
+  () => useGet({ model: userStore.Model, id: props.userId })
+)
+
+const user = computed(() => {
+  return userStore.getFromStore(props.userId)
+})
 
 const save_user = () => {
   user.value.save()
 }
 
 const save = debounce(save_user, 500)
+
+// BAD : this does not work as user is a ComputedRef
+/*
+let { item: user } = useGet({ model: userStore.Model, id: props.userId })
+watch(
+  // the source we are watching
+  () => props.userId,
+  // the action when tirggered
+  () => (user = useGet({ model: userStore.Model, id: props.userId }))
+)
+*/
 </script>

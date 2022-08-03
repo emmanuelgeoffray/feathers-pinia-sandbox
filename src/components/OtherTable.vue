@@ -1,6 +1,7 @@
 <template>
   <div v-if="users.length" class="my-3">
     [OtherTables.vue]This is an other component that loads data from store, i.e. without props from parents.
+    <div>This component is here to check that all components above are in sync with the store.</div>
     <br />
     [UserRowNoClone.vue] Data in this table loads items.
     <table class="table w-full table-zebra">
