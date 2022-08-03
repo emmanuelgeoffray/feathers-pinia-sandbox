@@ -12,12 +12,7 @@
           class="w-full pr-16 input input-primary input-bordered w-84"
           @keyup.enter="createUser"
         />
-        <button
-          class="absolute top-0 right-0 rounded-l-none btn btn-primary"
-          @click="createUser"
-        >
-          Save
-        </button>
+        <button class="absolute top-0 right-0 rounded-l-none btn btn-primary" @click="createUser">Save</button>
       </div>
     </div>
   </div>
@@ -28,9 +23,10 @@ import { useUserStore } from '~/stores/user'
 
 const userStore = useUserStore()
 const name = ref('')
+const id = ref(3)
 
 function createUser() {
-  new userStore.Model({ name: name.value }).save()
+  new userStore.Model({ id: id.value++, name: name.value }).create()
   name.value = ''
 }
 </script>

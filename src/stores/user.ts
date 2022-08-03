@@ -11,6 +11,14 @@ const servicePath = 'users'
 // Remove feathers-memory when the app is ready to connect to a real server.
 api.use(servicePath, memory({
   paginate: { default: 10, max: 200 },
+  store: {
+    // https://myheroacademia.fandom.com/wiki/List_of_Characters
+    0: { id: 0, name: 'Yuga Aoyama', age: 14, type: 'student', class: '1-A' },
+    /*
+    1: { id: 1, name: 'Mina Ashido', age: 15, type: 'student', class: '1-A' },
+    2: { id: 2, name: 'Tsuyu Asui', age: 14, type: 'student', class: '1-A' },
+    */
+  }
 }))
 
 export const useUserStore = defineStore({ servicePath, Model: User })

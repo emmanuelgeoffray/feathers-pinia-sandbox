@@ -16,10 +16,17 @@ declare module 'vue' {
     FeatherExternalLink: typeof import('~icons/feather/external-link')['default']
     FeatherPlus: typeof import('~icons/feather/plus')['default']
     Footer: typeof import('./components/Footer.vue')['default']
+    OtherTable: typeof import('./components/OtherTable.vue')['default']
+    OtherTableWithUseGet: typeof import('./components/OtherTableWithUseGet.vue')['default']
     README: typeof import('./components/README.md')['default']
     UserForm: typeof import('./components/UserForm.vue')['default']
     UserQuickCreate: typeof import('./components/UserQuickCreate.vue')['default']
     UserRow: typeof import('./components/UserRow.vue')['default']
+    UserRowById: typeof import('./components/UserRowById.vue')['default']
+    UserRowCloneAtSave: typeof import('./components/UserRowCloneAtSave.vue')['default']
+    UserRowCloneAtSaveWithoutFix: typeof import('./components/UserRowCloneAtSaveWithoutFix.vue')['default']
+    UserRowCloneWithoutFix: typeof import('./components/UserRowCloneWithoutFix.vue')['default']
+    UserRowNoClone: typeof import('./components/UserRowNoClone.vue')['default']
   }
 }
 

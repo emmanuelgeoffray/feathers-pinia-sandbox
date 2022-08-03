@@ -13,12 +13,7 @@
             class="w-full pr-16 input input-primary input-bordered w-84"
             @keyup.enter="save"
           />
-          <button
-            class="absolute top-0 right-0 rounded-l-none btn btn-primary"
-            @click="save"
-          >
-            Save
-          </button>
+          <button class="absolute top-0 right-0 rounded-l-none btn btn-primary" @click="save">Save</button>
         </div>
       </div>
     </div>
@@ -42,12 +37,12 @@
 
 <script setup lang="ts">
 import { handleClones } from 'feathers-pinia'
-import { useUserStore } from '~/stores/user'
+// import { useUserStore } from '~/stores/user'
 
-const userStore = useUserStore()
+// const userStore = useUserStore()
 
 const props = defineProps({
-  user: { type: Object, default: () => ({}) },
+  user: { type: Object, default: () => ({}) }
 })
 const emit = defineEmits(['saved'])
 

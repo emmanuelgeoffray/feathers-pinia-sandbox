@@ -1,8 +1,8 @@
 <template>
   <tr>
-    <th>{{ clones.user.id }}</th>
+    <th>{{ user.id }}</th>
     <td>
-      <input v-model="clones.user.name" type="text" class="input input-bordered" @input="() => save('name')" />
+      <input v-model="user.name" type="text" class="input input-bordered" @input="() => save('name')" />
     </td>
     <td>
       <div class="inline-flex">
@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import { handleClones } from 'feathers-pinia'
 import { debounce } from 'lodash'
 
 const props = defineProps({
@@ -24,8 +23,11 @@ const props = defineProps({
     required: true
   }
 })
+const { user } = toRefs(props)
 
-const { clones, saveHandlers } = handleClones(props)
-const { save_user } = saveHandlers
+const save_user = () => {
+  user.value.save()
+}
+
 const save = debounce(save_user, 500)
 </script>

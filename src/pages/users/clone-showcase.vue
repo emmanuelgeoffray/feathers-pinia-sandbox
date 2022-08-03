@@ -1,15 +1,17 @@
 <template>
-  <div class="overflow-x-auto">
-    <div class="text-left mb-2">
-      <router-link to="/users/new" class="btn btn">
-        <feather-plus class="mr-1" />
-        Create User
-      </router-link>
+  <!--<div class="overflow-x-auto">-->
+  <div>
+    <div>
+      This page showcases the use of the clone pattern in feathers-pinia.
+      <br />
+      A clone is a copy of an item from store, but it is not synced. That means any change from server will not be seen on the clone.
+      <br />
+      Hit button bellow to notice that.
     </div>
+    <button type="button" class="btn mt-4 mb-2" @click="patchFirstUser">Mock patch from server</button>
 
     <div v-if="users.length" class="my-3">
-      Data in this table will auto-update as you make changes. (Check the console) See <span class="kbd">UserRow.vue</span> for implementation
-      details.
+      [UserRow.vue] Data in this table loads clones. An update from server won't be shown here.
       <table class="table w-full table-zebra">
         <thead>
           <tr>
@@ -22,8 +24,21 @@
           <UserRow v-for="user in users" :key="user.id" :user="user" />
         </tbody>
       </table>
-
-      <UserQuickCreate />
+    </div>
+    <div v-if="users.length" class="my-3">
+      [UserRowNoClone.vue] Data in this table loads items. An update from server will show here.
+      <table class="table w-full table-zebra">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <UserRowNoClone v-for="user in users" :key="user.id" :user="user" />
+        </tbody>
+      </table>
     </div>
 
     <div v-else class="card bg-base-300">
@@ -36,7 +51,7 @@
         </router-link>
       </div>
     </div>
-    <button type="button" class="btn btn-sm" @click="patchFirstUser">Mock patch from server</button>
+    <!--<UserQuickCreate />-->
   </div>
 </template>
 

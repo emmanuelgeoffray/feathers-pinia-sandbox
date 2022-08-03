@@ -1,8 +1,8 @@
 <template>
   <tr>
-    <th>{{ clones.user.id }}</th>
+    <th>{{ user.id }}</th>
     <td>
-      <input v-model="clones.user.name" type="text" class="input input-bordered" @input="() => save('name')" />
+      <input v-model="user.name" type="text" class="input input-bordered" @input="() => save('name')" />
     </td>
     <td>
       <div class="inline-flex">
@@ -15,17 +15,25 @@
 </template>
 
 <script setup lang="ts">
-import { handleClones } from 'feathers-pinia'
 import { debounce } from 'lodash'
+import { useGet } from 'feathers-pinia'
+import { useUserStore } from '~/stores/user'
 
 const props = defineProps({
-  user: {
-    type: Object,
+  userId: {
+    type: Number,
     required: true
   }
 })
 
-const { clones, saveHandlers } = handleClones(props)
-const { save_user } = saveHandlers
+const userStore = useUserStore()
+
+// how is this reactive !?
+const { item: user } = useGet({ model: userStore.Model, id: props.userId })
+
+const save_user = () => {
+  user.value.save()
+}
+
 const save = debounce(save_user, 500)
 </script>
