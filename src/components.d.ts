@@ -28,6 +28,7 @@ declare module 'vue' {
     UserRowCloneAtSaveWithoutFix: typeof import('./components/UserRowCloneAtSaveWithoutFix.vue')['default']
     UserRowCloneWithoutFix: typeof import('./components/UserRowCloneWithoutFix.vue')['default']
     UserRowNoClone: typeof import('./components/UserRowNoClone.vue')['default']
+    WatchAndComputed: typeof import('./components/WatchAndComputed.vue')['default']
   }
 }
 
